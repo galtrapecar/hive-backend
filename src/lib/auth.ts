@@ -1,5 +1,6 @@
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
+import { organization } from 'better-auth/plugins';
 import { PrismaClient } from '../generated/prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { Pool } from 'pg';
@@ -16,4 +17,12 @@ export const auth = betterAuth({
         enabled: true,
     },
     trustedOrigins: ['http://localhost:5173'],
+    plugins: [
+        organization({
+            allowUserToCreateOrganization: true,
+            organizationLimit: 5,
+            creatorRole: 'owner',
+            membershipLimit: 100,
+        }),
+    ],
 });
