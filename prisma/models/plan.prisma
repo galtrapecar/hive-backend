@@ -1,0 +1,11 @@
+model Plan {
+    id           Int      @id @default(autoincrement())
+    customer     String
+    price        Int
+    weight       Int
+    pickupPoint  String
+    pickupTime   DateTime
+    dropoffPoint String
+    dropoffTime  DateTime
+    description  String?
+}
