@@ -7,7 +7,7 @@ import { PDFParse } from 'pdf-parse';
 import * as XLSX from 'xlsx';
 import { PrismaService } from 'src/prisma/prisma.service';
 
-const planSchema = z.object({
+const orderSchema = z.object({
   customer: z.string().describe('The customer name'),
   price: z.number().describe('The price in numeric value'),
   weight: z.number().describe('The weight in numeric value'),
@@ -40,17 +40,17 @@ export class AiService {
     });
   }
 
-  async extractPlanFromFile(file: Express.Multer.File) {
+  async extractOrderFromFile(file: Express.Multer.File) {
     const text = await this.extractText(file);
 
-    const structured = this.llm.withStructuredOutput(planSchema);
+    const structured = this.llm.withStructuredOutput(orderSchema);
 
     const prompt = ChatPromptTemplate.fromMessages([
       [
         'system',
-        'You are a logistics data extraction assistant. Extract the plan details from the provided document. Return all fields accurately. For dates, use ISO 8601 format.',
+        'You are a logistics data extraction assistant. Extract the order details from the provided document. Return all fields accurately. For dates, use ISO 8601 format.',
       ],
-      ['human', 'Extract the plan details from this document:\n\n{text}'],
+      ['human', 'Extract the order details from this document:\n\n{text}'],
     ]);
 
     const chain = prompt.pipe(structured);

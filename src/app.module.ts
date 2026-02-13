@@ -6,7 +6,8 @@ import { AuthModule } from '@thallesp/nestjs-better-auth';
 import { auth } from './lib/auth';
 import { AiController } from './ai/ai.controller';
 import { AiService } from './ai/ai.service';
-import { PrismaService } from './prisma/prisma.service';
+import { PrismaModule } from './prisma/prisma.module';
+import { OrderModule } from './order/order.module';
 
 @Module({
   imports: [
@@ -14,8 +15,10 @@ import { PrismaService } from './prisma/prisma.service';
       isGlobal: true,
     }),
     AuthModule.forRoot({ auth }),
+    PrismaModule,
+    OrderModule,
   ],
   controllers: [AppController, AiController],
-  providers: [AppService, PrismaService, AiService],
+  providers: [AppService, AiService],
 })
 export class AppModule {}

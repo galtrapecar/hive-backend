@@ -1,0 +1,16 @@
+model Order {
+    id                  Int             @id @default(autoincrement())
+    organizationId      Int
+    customer            String
+    price               Int
+    weight              Int
+    pickupPoint         String
+    pickupTime          DateTime
+    dropoffPoint        String
+    dropoffTime         DateTime
+    description         String?
+    plan                Plan?
+    
+    createdAt           DateTime        @default(now())
+    updatedAt           DateTime        @updatedAt
+}

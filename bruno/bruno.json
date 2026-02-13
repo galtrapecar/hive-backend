@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Hive Backend",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    "dist"
+  ]
+}

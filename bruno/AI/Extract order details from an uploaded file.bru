@@ -1,0 +1,15 @@
+meta {
+  name: Extract order details from an uploaded file
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/ai/extract-order
+  body: multipartForm
+  auth: inherit
+}
+
+body:multipart-form {
+  file: 
+}

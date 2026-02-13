@@ -52,3 +52,13 @@ export type Member = Prisma.MemberModel
  * 
  */
 export type Invitation = Prisma.InvitationModel
+/**
+ * Model Order
+ * 
+ */
+export type Order = Prisma.OrderModel
+/**
+ * Model Plan
+ * 
+ */
+export type Plan = Prisma.PlanModel

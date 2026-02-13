@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
-export class ExtractedPlanDto {
+export class ExtractedOrderDto {
   @ApiProperty({ example: 'Acme Corp' })
   customer: string;
 

@@ -1,0 +1,27 @@
+meta {
+  name: Update an order
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{baseUrl}}/order/:id
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: 
+}
+
+body:json {
+  "organizationId": 0,
+  "customer": "",
+  "price": 0,
+  "weight": 0,
+  "pickupPoint": "",
+  "pickupTime": "",
+  "dropoffPoint": "",
+  "dropoffTime": "",
+  "description": ""
+}

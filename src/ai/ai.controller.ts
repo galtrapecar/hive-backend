@@ -13,7 +13,7 @@ import {
   ApiResponse,
 } from '@nestjs/swagger';
 import { AiService } from './ai.service';
-import { ExtractedPlanDto } from './dto/extracted-plan.dto';
+import { ExtractedOrderDto } from './dto/extracted-order.dto';
 import { AllowAnonymous } from '@thallesp/nestjs-better-auth';
 
 @ApiTags('AI')
@@ -21,13 +21,13 @@ import { AllowAnonymous } from '@thallesp/nestjs-better-auth';
 export class AiController {
   constructor(private readonly aiService: AiService) {}
 
-  @Post('/extract-plan')
+  @Post('/extract-order')
   @AllowAnonymous()
   @UseInterceptors(FileInterceptor('file'))
-  @ApiOperation({ summary: 'Extract plan details from an uploaded file' })
+  @ApiOperation({ summary: 'Extract order details from an uploaded file' })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
-    description: 'File to extract plan details from (txt, pdf, xlsx)',
+    description: 'File to extract order details from (txt, pdf, xlsx)',
     schema: {
       type: 'object',
       properties: {
@@ -38,10 +38,10 @@ export class AiController {
   })
   @ApiResponse({
     status: 201,
-    description: 'Extracted plan details',
-    type: ExtractedPlanDto,
+    description: 'Extracted order details',
+    type: ExtractedOrderDto,
   })
-  async extractPlanFromFile(@UploadedFile() file: Express.Multer.File) {
-    return await this.aiService.extractPlanFromFile(file);
+  async extractOrderFromFile(@UploadedFile() file: Express.Multer.File) {
+    return await this.aiService.extractOrderFromFile(file);
   }
 }

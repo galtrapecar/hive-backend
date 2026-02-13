@@ -1,11 +1,15 @@
+enum PlanStatus {
+    PENDING
+    IN_PROGRESS
+    COMPLETED
+}
+
 model Plan {
-    id           Int      @id @default(autoincrement())
-    customer     String
-    price        Int
-    weight       Int
-    pickupPoint  String
-    pickupTime   DateTime
-    dropoffPoint String
-    dropoffTime  DateTime
-    description  String?
+    id      Int        @id @default(autoincrement())
+    status  PlanStatus @default(PENDING)
+    orderId Int        @unique
+    order   Order      @relation(fields: [orderId], references: [id])
+
+    createdAt        DateTime           @default(now())
+    updatedAt        DateTime           @updatedAt
 }
