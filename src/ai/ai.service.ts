@@ -1,16 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { ChatOpenAI } from '@langchain/openai';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
 import { z } from 'zod';
 import { PDFParse } from 'pdf-parse';
 import * as XLSX from 'xlsx';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { ChatMistralAI } from '@langchain/mistralai';
 
 const orderSchema = z.object({
-  customer: z.string().describe('The customer name'),
-  price: z.number().describe('The price in numeric value'),
-  weight: z.number().describe('The weight in numeric value'),
+  customer: z
+    .string()
+    .describe('The customer name usually indicated by "from" field'),
+  price: z.number().describe('The price in euros'),
+  weight: z.number().describe('The weight in kilograms'),
   pickupPoint: z.string().describe('The pickup location/address'),
   pickupTime: z
     .string()
@@ -27,16 +28,15 @@ const orderSchema = z.object({
 
 @Injectable()
 export class AiService {
-  private llm: ChatOpenAI;
+  private llm: ChatMistralAI;
 
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly configService: ConfigService,
-  ) {
-    this.llm = new ChatOpenAI({
-      model: 'gpt-4.1-nano',
+  constructor(private readonly configService: ConfigService) {
+    this.llm = new ChatMistralAI({
+      model: 'mistral-small-latest',
       temperature: 0,
-      apiKey: this.configService.get<string>('OPEN_AI_KEY'),
+      maxTokens: undefined,
+      maxRetries: 2,
+      apiKey: this.configService.getOrThrow('MISTRAL_API_KEY'),
     });
   }
 
@@ -48,7 +48,13 @@ export class AiService {
     const prompt = ChatPromptTemplate.fromMessages([
       [
         'system',
-        'You are a logistics data extraction assistant. Extract the order details from the provided document. Return all fields accurately. For dates, use ISO 8601 format.',
+        'You are a logistics data extraction assistant. Extract the order details from the provided document. Return all fields accurately.\n\n' +
+          'CUSTOMER IDENTIFICATION:\n' +
+          '- The customer is the company PLACING the order (the shipper/consignor), NOT the transport/logistics company.\n' +
+          '- In documents, the customer is typically indicated by "Od:" (From:) or "From:" field.\n' +
+          '- The logistics/transport company is indicated by "Za:" (To:) or "To:" field and should NOT be extracted as the customer.\n' +
+          '- The customer is the one sending goods and hiring the logistics company for transport.\n\n' +
+          'For dates, use ISO 8601 format.',
       ],
       ['human', 'Extract the order details from this document:\n\n{text}'],
     ]);

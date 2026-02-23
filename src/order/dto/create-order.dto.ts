@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateOrderDto {
-  @ApiProperty({ example: 'abc...' })
+  @ApiProperty({ example: 'org_123abc' })
   organizationId: string;
 
   @ApiProperty({ example: 'Acme Corp' })

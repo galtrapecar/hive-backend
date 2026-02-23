@@ -1,5 +1,6 @@
 import {
   Controller,
+  ParseFilePipe,
   Post,
   UploadedFile,
   UseInterceptors,
@@ -28,12 +29,17 @@ export class AiController {
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     description: 'File to extract order details from (txt, pdf, xlsx)',
+    required: true,
     schema: {
       type: 'object',
-      properties: {
-        file: { type: 'string', format: 'binary' },
-      },
       required: ['file'],
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+          description: 'Order file (txt, pdf, xlsx)',
+        },
+      },
     },
   })
   @ApiResponse({
@@ -41,7 +47,9 @@ export class AiController {
     description: 'Extracted order details',
     type: ExtractedOrderDto,
   })
-  async extractOrderFromFile(@UploadedFile() file: Express.Multer.File) {
+  async extractOrderFromFile(
+    @UploadedFile(new ParseFilePipe()) file: Express.Multer.File,
+  ) {
     return await this.aiService.extractOrderFromFile(file);
   }
 }

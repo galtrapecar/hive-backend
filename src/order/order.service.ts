@@ -7,27 +7,31 @@ import { UpdateOrderDto } from './dto/update-order.dto';
 export class OrderService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createOrderDto: CreateOrderDto) {
+  async create(createOrderDto: CreateOrderDto, organizationId: string) {
     return this.prisma.order.create({
       data: {
         ...createOrderDto,
+        organizationId,
         pickupTime: new Date(createOrderDto.pickupTime),
         dropoffTime: new Date(createOrderDto.dropoffTime),
       },
     });
   }
 
-  async findAll(page: number = 1, limit: number = 20) {
+  async findAll(organizationId: string, page: number = 1, limit: number = 20) {
     const skip = (page - 1) * limit;
 
     const [data, total] = await Promise.all([
       this.prisma.order.findMany({
+        where: { organizationId },
         skip,
         take: limit,
         include: { plan: true },
         orderBy: { createdAt: 'desc' },
       }),
-      this.prisma.order.count(),
+      this.prisma.order.count({
+        where: { organizationId },
+      }),
     ]);
 
     return {
@@ -41,21 +45,26 @@ export class OrderService {
     };
   }
 
-  async findOne(id: number) {
-    const order = await this.prisma.order.findUnique({
-      where: { id },
+  async findOne(id: number, organizationId: string) {
+    const order = await this.prisma.order.findFirst({
+      where: {
+        id,
+        organizationId,
+      },
       include: { plan: true },
     });
 
     if (!order) {
-      throw new NotFoundException(`Order #${id} not found`);
+      throw new NotFoundException(
+        `Order #${id} not found or does not belong to your organization`,
+      );
     }
 
     return order;
   }
 
-  async update(id: number, updateOrderDto: UpdateOrderDto) {
-    await this.findOne(id);
+  async update(id: number, updateOrderDto: UpdateOrderDto, organizationId: string) {
+    await this.findOne(id, organizationId);
 
     const data: Record<string, unknown> = { ...updateOrderDto };
     if (updateOrderDto.pickupTime) {
@@ -71,8 +80,8 @@ export class OrderService {
     });
   }
 
-  async remove(id: number) {
-    await this.findOne(id);
+  async remove(id: number, organizationId: string) {
+    await this.findOne(id, organizationId);
 
     return this.prisma.order.delete({
       where: { id },
