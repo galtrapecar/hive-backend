@@ -1220,8 +1220,12 @@ export const OrderScalarFieldEnum = {
   price: 'price',
   weight: 'weight',
   pickupPoint: 'pickupPoint',
+  pickupLat: 'pickupLat',
+  pickupLng: 'pickupLng',
   pickupTime: 'pickupTime',
   dropoffPoint: 'dropoffPoint',
+  dropoffLat: 'dropoffLat',
+  dropoffLng: 'dropoffLng',
   dropoffTime: 'dropoffTime',
   description: 'description',
   createdAt: 'createdAt',
@@ -1322,20 +1326,6 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
- * Reference to a field of type 'PlanStatus'
- */
-export type EnumPlanStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlanStatus'>
-    
-
-
-/**
- * Reference to a field of type 'PlanStatus[]'
- */
-export type ListEnumPlanStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlanStatus[]'>
-    
-
-
-/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -1346,6 +1336,20 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
  * Reference to a field of type 'Float[]'
  */
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PlanStatus'
+ */
+export type EnumPlanStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlanStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'PlanStatus[]'
+ */
+export type ListEnumPlanStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlanStatus[]'>
     
 
 /**

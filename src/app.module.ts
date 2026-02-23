@@ -8,6 +8,7 @@ import { AiController } from './ai/ai.controller';
 import { AiService } from './ai/ai.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { OrderModule } from './order/order.module';
+import { RoutingModule } from './routing/routing.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { OrderModule } from './order/order.module';
     AuthModule.forRoot({ auth }),
     PrismaModule,
     OrderModule,
+    RoutingModule,
   ],
   controllers: [AppController, AiController],
   providers: [AppService, AiService],

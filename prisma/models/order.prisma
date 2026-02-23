@@ -5,8 +5,12 @@ model Order {
     price               Int
     weight              Int
     pickupPoint         String
+    pickupLat           Float?
+    pickupLng           Float?
     pickupTime          DateTime
     dropoffPoint        String
+    dropoffLat          Float?
+    dropoffLng          Float?
     dropoffTime         DateTime
     description         String?
     plan                Plan?

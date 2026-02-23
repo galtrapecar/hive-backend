@@ -20,11 +20,23 @@ export class OrderResponseDto {
   @ApiProperty({ example: '123 Main St, New York' })
   pickupPoint: string;
 
+  @ApiPropertyOptional({ example: 40.7128 })
+  pickupLat: number | null;
+
+  @ApiPropertyOptional({ example: -74.006 })
+  pickupLng: number | null;
+
   @ApiProperty({ example: '2025-06-01T09:00:00.000Z' })
   pickupTime: Date;
 
   @ApiProperty({ example: '456 Oak Ave, Boston' })
   dropoffPoint: string;
+
+  @ApiPropertyOptional({ example: 42.3601 })
+  dropoffLat: number | null;
+
+  @ApiPropertyOptional({ example: -71.0589 })
+  dropoffLng: number | null;
 
   @ApiProperty({ example: '2025-06-01T17:00:00.000Z' })
   dropoffTime: Date;
