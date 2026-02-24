@@ -51,7 +51,7 @@ export class RoutingService {
 
   private mapHits(hits: Record<string, unknown>[]): GeocodeResponseItemDto[] {
     return hits.map((hit) => ({
-      name: hit.name as string,
+      name: this.formatAddress(hit),
       lat: hit.point?.['lat'],
       lng: hit.point?.['lng'],
       country: hit.country as string | undefined,
@@ -61,5 +61,22 @@ export class RoutingService {
       street: hit.street as string | undefined,
       housenumber: hit.housenumber as string | undefined,
     }));
+  }
+
+  private formatAddress(hit: Record<string, unknown>): string {
+    const street = hit.street as string | undefined;
+    const housenumber = hit.housenumber as string | undefined;
+    const name = hit.name as string | undefined;
+    const city = hit.city as string | undefined;
+    const postcode = hit.postcode as string | undefined;
+    const country = hit.country as string | undefined;
+
+    const streetPart = street
+      ? [street, housenumber].filter(Boolean).join(' ')
+      : name;
+    const cityPart = [postcode, city].filter(Boolean).join(' ');
+    const full = [streetPart, cityPart, country].filter(Boolean).join(', ');
+
+    return full || (name as string);
   }
 }
