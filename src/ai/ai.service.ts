@@ -93,8 +93,10 @@ export class AiService {
 
     return {
       ...result,
+      pickupPoint: pickupCoords?.address ?? result.pickupPoint,
       pickupLat: pickupCoords?.lat ?? undefined,
       pickupLng: pickupCoords?.lng ?? undefined,
+      dropoffPoint: dropoffCoords?.address ?? result.dropoffPoint,
       dropoffLat: dropoffCoords?.lat ?? undefined,
       dropoffLng: dropoffCoords?.lng ?? undefined,
     };
@@ -102,14 +104,20 @@ export class AiService {
 
   private async resolveCoordinates(
     point: string,
-  ): Promise<{ lat: number; lng: number } | null> {
+  ): Promise<{ lat: number; lng: number; address: string } | null> {
     const coordMatch = point.match(/^(-?\d+\.?\d*),\s*(-?\d+\.?\d*)$/);
     if (coordMatch) {
-      return { lat: parseFloat(coordMatch[1]), lng: parseFloat(coordMatch[2]) };
+      const lat = parseFloat(coordMatch[1]);
+      const lng = parseFloat(coordMatch[2]);
+      const results = await this.routingService.reverseGeocode(lat, lng, 1);
+      const address = results[0]?.name ?? `${lat},${lng}`;
+      return { lat, lng, address };
     }
 
     const results = await this.routingService.geocode(point, 1);
-    return results[0] ? { lat: results[0].lat, lng: results[0].lng } : null;
+    return results[0]
+      ? { lat: results[0].lat, lng: results[0].lng, address: point }
+      : null;
   }
 
   private async extractText(file: Express.Multer.File): Promise<string> {
