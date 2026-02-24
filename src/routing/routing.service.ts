@@ -75,8 +75,14 @@ export class RoutingService {
       ? [street, housenumber].filter(Boolean).join(' ')
       : name;
     const cityPart = [postcode, city].filter(Boolean).join(' ');
-    const full = [streetPart, cityPart, country].filter(Boolean).join(', ');
 
-    return full || (name as string);
+    const parts: string[] = [];
+    if (streetPart && streetPart !== city && streetPart !== cityPart) {
+      parts.push(streetPart);
+    }
+    if (cityPart) parts.push(cityPart);
+    if (country) parts.push(country);
+
+    return parts.join(', ') || (name as string);
   }
 }
