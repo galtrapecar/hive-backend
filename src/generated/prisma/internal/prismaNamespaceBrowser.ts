@@ -59,7 +59,8 @@ export const ModelName = {
   Member: 'Member',
   Invitation: 'Invitation',
   Order: 'Order',
-  Plan: 'Plan'
+  Plan: 'Plan',
+  Vehicle: 'Vehicle'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -205,6 +206,28 @@ export const PlanScalarFieldEnum = {
 } as const
 
 export type PlanScalarFieldEnum = (typeof PlanScalarFieldEnum)[keyof typeof PlanScalarFieldEnum]
+
+
+export const VehicleScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  registrationPlate: 'registrationPlate',
+  internalNumber: 'internalNumber',
+  type: 'type',
+  make: 'make',
+  model: 'model',
+  year: 'year',
+  vin: 'vin',
+  payloadCapacity: 'payloadCapacity',
+  grossWeight: 'grossWeight',
+  loadingMeters: 'loadingMeters',
+  volume: 'volume',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VehicleScalarFieldEnum = (typeof VehicleScalarFieldEnum)[keyof typeof VehicleScalarFieldEnum]
 
 
 export const SortOrder = {

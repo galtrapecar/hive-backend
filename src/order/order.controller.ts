@@ -8,7 +8,7 @@ import {
   Delete,
   Query,
   ParseIntPipe,
-  UnauthorizedException,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
 import { OrderService } from './order.service';
@@ -18,9 +18,11 @@ import {
   OrderResponseDto,
   PaginatedOrderResponseDto,
 } from './dto/order-response.dto';
+import { OrgMemberGuard } from '../common/guards/org-member.guard';
 
 @ApiTags('Orders')
 @Controller('order')
+@UseGuards(OrgMemberGuard)
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
@@ -29,9 +31,6 @@ export class OrderController {
   @ApiResponse({ status: 201, type: OrderResponseDto })
   async create(@Body() createOrderDto: CreateOrderDto) {
     const { organizationId, ...orderData } = createOrderDto;
-    if (!organizationId) {
-      throw new UnauthorizedException('organizationId is required');
-    }
     return await this.orderService.create(orderData as CreateOrderDto, organizationId);
   }
 
@@ -48,9 +47,6 @@ export class OrderController {
     @Query('page') page?: string,
     @Query('limit') limit?: string,
   ) {
-    if (!organizationId) {
-      throw new UnauthorizedException('organizationId is required');
-    }
     return await this.orderService.findAll(
       organizationId,
       page ? +page : undefined,
@@ -66,9 +62,6 @@ export class OrderController {
     @Param('id', ParseIntPipe) id: number,
     @Query('organizationId') organizationId: string,
   ) {
-    if (!organizationId) {
-      throw new UnauthorizedException('organizationId is required');
-    }
     return await this.orderService.findOne(id, organizationId);
   }
 
@@ -81,9 +74,6 @@ export class OrderController {
     @Body() updateOrderDto: UpdateOrderDto,
     @Query('organizationId') organizationId: string,
   ) {
-    if (!organizationId) {
-      throw new UnauthorizedException('organizationId is required');
-    }
     return await this.orderService.update(id, updateOrderDto, organizationId);
   }
 
@@ -95,9 +85,6 @@ export class OrderController {
     @Param('id', ParseIntPipe) id: number,
     @Query('organizationId') organizationId: string,
   ) {
-    if (!organizationId) {
-      throw new UnauthorizedException('organizationId is required');
-    }
     return await this.orderService.remove(id, organizationId);
   }
 }

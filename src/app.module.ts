@@ -9,6 +9,7 @@ import { AiService } from './ai/ai.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { OrderModule } from './order/order.module';
 import { RoutingModule } from './routing/routing.module';
+import { VehicleModule } from './vehicle/vehicle.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { RoutingModule } from './routing/routing.module';
     PrismaModule,
     OrderModule,
     RoutingModule,
+    VehicleModule,
   ],
   controllers: [AppController, AiController],
   providers: [AppService, AiService],

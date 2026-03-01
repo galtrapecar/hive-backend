@@ -62,3 +62,8 @@ export type Order = Prisma.OrderModel
  * 
  */
 export type Plan = Prisma.PlanModel
+/**
+ * Model Vehicle
+ * 
+ */
+export type Vehicle = Prisma.VehicleModel

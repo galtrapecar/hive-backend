@@ -16,3 +16,29 @@ export const PlanStatus = {
 } as const
 
 export type PlanStatus = (typeof PlanStatus)[keyof typeof PlanStatus]
+
+
+export const VehicleType = {
+  OTHER: 'OTHER',
+  BOX_TRUCK: 'BOX_TRUCK',
+  WALKING_FLOOR: 'WALKING_FLOOR',
+  COIL: 'COIL',
+  CONTAINER: 'CONTAINER',
+  CAR_TRANSPORTER: 'CAR_TRANSPORTER',
+  TANKER: 'TANKER',
+  TARPAULIN: 'TARPAULIN',
+  FLATBED: 'FLATBED',
+  REFRIGERATOR: 'REFRIGERATOR',
+  TIPPER: 'TIPPER',
+  SILO: 'SILO'
+} as const
+
+export type VehicleType = (typeof VehicleType)[keyof typeof VehicleType]
+
+
+export const VehicleStatus = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE'
+} as const
+
+export type VehicleStatus = (typeof VehicleStatus)[keyof typeof VehicleStatus]
