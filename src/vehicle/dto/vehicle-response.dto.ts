@@ -11,37 +11,58 @@ export class VehicleResponseDto {
   @ApiProperty({ example: 'LJ 16-HFM' })
   registrationPlate: string;
 
-  @ApiPropertyOptional({ example: 'V-001' })
+  @ApiPropertyOptional({ type: String, nullable: true, example: 'V-001' })
   internalNumber: string | null;
 
   @ApiProperty({ enum: VehicleType, example: VehicleType.TARPAULIN })
   type: VehicleType;
 
-  @ApiPropertyOptional({ example: 'MAN' })
+  @ApiPropertyOptional({ type: String, nullable: true, example: 'MAN' })
   make: string | null;
 
-  @ApiPropertyOptional({ example: 'TGX 18.470' })
+  @ApiPropertyOptional({ type: String, nullable: true, example: 'TGX 18.470' })
   model: string | null;
 
-  @ApiPropertyOptional({ example: 2022 })
+  @ApiPropertyOptional({ type: Number, nullable: true, example: 2022 })
   year: number | null;
 
-  @ApiPropertyOptional({ example: 'WMA06XZZ1M1234567' })
+  @ApiPropertyOptional({
+    type: String,
+    nullable: true,
+    example: 'WMA06XZZ1M1234567',
+  })
   vin: string | null;
 
   @ApiPropertyOptional({
+    type: Number,
+    nullable: true,
     example: 24000,
     description: 'Payload capacity in kg',
   })
   payloadCapacity: number | null;
 
-  @ApiPropertyOptional({ example: 40000, description: 'Gross weight in kg' })
+  @ApiPropertyOptional({
+    type: Number,
+    nullable: true,
+    example: 40000,
+    description: 'Gross weight in kg',
+  })
   grossWeight: number | null;
 
-  @ApiPropertyOptional({ example: 13.6, description: 'Loading meters' })
+  @ApiPropertyOptional({
+    type: Number,
+    nullable: true,
+    example: 13.6,
+    description: 'Loading meters',
+  })
   loadingMeters: number | null;
 
-  @ApiPropertyOptional({ example: 90, description: 'Volume in m³' })
+  @ApiPropertyOptional({
+    type: Number,
+    nullable: true,
+    example: 90,
+    description: 'Volume in m³',
+  })
   volume: number | null;
 
   @ApiProperty({ enum: VehicleStatus, example: VehicleStatus.ACTIVE })
