@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { VehicleType } from 'src/generated/prisma/client';
+import { VehicleType, AdrClass } from 'src/generated/prisma/client';
 
 export class CreateVehicleDto {
   @ApiProperty({ example: 'org_123abc' })
@@ -26,6 +26,15 @@ export class CreateVehicleDto {
   @ApiPropertyOptional({ example: 'WMA06XZZ1M1234567' })
   vin?: string;
 
+  @ApiPropertyOptional({ example: 4.0, description: 'Height in meters' })
+  height?: number;
+
+  @ApiPropertyOptional({ example: 2.55, description: 'Width in meters' })
+  width?: number;
+
+  @ApiPropertyOptional({ example: 16.5, description: 'Length in meters' })
+  length?: number;
+
   @ApiPropertyOptional({
     example: 24000,
     description: 'Payload capacity in kg',
@@ -40,4 +49,14 @@ export class CreateVehicleDto {
 
   @ApiPropertyOptional({ example: 90, description: 'Volume in m³' })
   volume?: number;
+
+  @ApiPropertyOptional({ example: 5, description: 'Number of axles' })
+  axles?: number;
+
+  @ApiPropertyOptional({
+    enum: AdrClass,
+    example: AdrClass.CLASS_3,
+    description: 'ADR dangerous goods class',
+  })
+  adrClass?: AdrClass;
 }

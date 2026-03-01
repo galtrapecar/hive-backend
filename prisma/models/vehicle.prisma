@@ -13,6 +13,18 @@ enum VehicleType {
     SILO            // Silo/bulk carrier - cement, flour, grain, powders, granular materials
 }
 
+enum AdrClass {
+    CLASS_1   // Explosives
+    CLASS_2   // Gases
+    CLASS_3   // Flammable liquids
+    CLASS_4   // Flammable solids
+    CLASS_5   // Oxidizing substances and organic peroxides
+    CLASS_6   // Toxic and infectious substances
+    CLASS_7   // Radioactive material
+    CLASS_8   // Corrosive substances
+    CLASS_9   // Miscellaneous dangerous substances
+}
+
 enum VehicleStatus {
     ACTIVE
     INACTIVE
@@ -32,11 +44,18 @@ model Vehicle {
     year              Int?
     vin               String?
 
+    // Dimensions
+    height            Float?      // m
+    width             Float?      // m
+    length            Float?      // m
+
     // Operational
     payloadCapacity   Int?        // kg
     grossWeight       Int?        // kg
     loadingMeters     Float?      // ldm
     volume            Float?      // m³
+    axles             Int?
+    adrClass          AdrClass?
 
     status            VehicleStatus @default(ACTIVE)
 

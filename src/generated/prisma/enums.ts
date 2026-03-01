@@ -36,6 +36,21 @@ export const VehicleType = {
 export type VehicleType = (typeof VehicleType)[keyof typeof VehicleType]
 
 
+export const AdrClass = {
+  CLASS_1: 'CLASS_1',
+  CLASS_2: 'CLASS_2',
+  CLASS_3: 'CLASS_3',
+  CLASS_4: 'CLASS_4',
+  CLASS_5: 'CLASS_5',
+  CLASS_6: 'CLASS_6',
+  CLASS_7: 'CLASS_7',
+  CLASS_8: 'CLASS_8',
+  CLASS_9: 'CLASS_9'
+} as const
+
+export type AdrClass = (typeof AdrClass)[keyof typeof AdrClass]
+
+
 export const VehicleStatus = {
   ACTIVE: 'ACTIVE',
   INACTIVE: 'INACTIVE'

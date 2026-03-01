@@ -1,5 +1,9 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { VehicleType, VehicleStatus } from 'src/generated/prisma/client';
+import {
+  VehicleType,
+  VehicleStatus,
+  AdrClass,
+} from 'src/generated/prisma/client';
 
 export class VehicleResponseDto {
   @ApiProperty({ example: 1 })
@@ -60,10 +64,50 @@ export class VehicleResponseDto {
   @ApiPropertyOptional({
     type: Number,
     nullable: true,
+    example: 4.0,
+    description: 'Height in meters',
+  })
+  height: number | null;
+
+  @ApiPropertyOptional({
+    type: Number,
+    nullable: true,
+    example: 2.55,
+    description: 'Width in meters',
+  })
+  width: number | null;
+
+  @ApiPropertyOptional({
+    type: Number,
+    nullable: true,
+    example: 16.5,
+    description: 'Length in meters',
+  })
+  length: number | null;
+
+  @ApiPropertyOptional({
+    type: Number,
+    nullable: true,
     example: 90,
     description: 'Volume in m³',
   })
   volume: number | null;
+
+  @ApiPropertyOptional({
+    type: Number,
+    nullable: true,
+    example: 5,
+    description: 'Number of axles',
+  })
+  axles: number | null;
+
+  @ApiPropertyOptional({
+    enum: AdrClass,
+    nullable: true,
+    example: AdrClass.CLASS_3,
+    description: 'ADR dangerous goods class',
+  })
+  adrClass: AdrClass | null;
 
   @ApiProperty({ enum: VehicleStatus, example: VehicleStatus.ACTIVE })
   status: VehicleStatus;

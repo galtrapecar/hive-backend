@@ -237,6 +237,13 @@ export type IntNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedIntNullableFilter<$PrismaModel> | number | null
 }
 
+export type EnumAdrClassNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.AdrClass | Prisma.EnumAdrClassFieldRefInput<$PrismaModel> | null
+  in?: $Enums.AdrClass[] | Prisma.ListEnumAdrClassFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.AdrClass[] | Prisma.ListEnumAdrClassFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumAdrClassNullableFilter<$PrismaModel> | $Enums.AdrClass | null
+}
+
 export type EnumVehicleStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.VehicleStatus | Prisma.EnumVehicleStatusFieldRefInput<$PrismaModel>
   in?: $Enums.VehicleStatus[] | Prisma.ListEnumVehicleStatusFieldRefInput<$PrismaModel>
@@ -268,6 +275,16 @@ export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _max?: Prisma.NestedIntNullableFilter<$PrismaModel>
+}
+
+export type EnumAdrClassNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AdrClass | Prisma.EnumAdrClassFieldRefInput<$PrismaModel> | null
+  in?: $Enums.AdrClass[] | Prisma.ListEnumAdrClassFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.AdrClass[] | Prisma.ListEnumAdrClassFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumAdrClassNullableWithAggregatesFilter<$PrismaModel> | $Enums.AdrClass | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAdrClassNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAdrClassNullableFilter<$PrismaModel>
 }
 
 export type EnumVehicleStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -505,6 +522,13 @@ export type NestedEnumVehicleTypeFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumVehicleTypeFilter<$PrismaModel> | $Enums.VehicleType
 }
 
+export type NestedEnumAdrClassNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.AdrClass | Prisma.EnumAdrClassFieldRefInput<$PrismaModel> | null
+  in?: $Enums.AdrClass[] | Prisma.ListEnumAdrClassFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.AdrClass[] | Prisma.ListEnumAdrClassFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumAdrClassNullableFilter<$PrismaModel> | $Enums.AdrClass | null
+}
+
 export type NestedEnumVehicleStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.VehicleStatus | Prisma.EnumVehicleStatusFieldRefInput<$PrismaModel>
   in?: $Enums.VehicleStatus[] | Prisma.ListEnumVehicleStatusFieldRefInput<$PrismaModel>
@@ -536,6 +560,16 @@ export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _max?: Prisma.NestedIntNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumAdrClassNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AdrClass | Prisma.EnumAdrClassFieldRefInput<$PrismaModel> | null
+  in?: $Enums.AdrClass[] | Prisma.ListEnumAdrClassFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.AdrClass[] | Prisma.ListEnumAdrClassFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumAdrClassNullableWithAggregatesFilter<$PrismaModel> | $Enums.AdrClass | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAdrClassNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAdrClassNullableFilter<$PrismaModel>
 }
 
 export type NestedEnumVehicleStatusWithAggregatesFilter<$PrismaModel = never> = {

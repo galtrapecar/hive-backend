@@ -1331,10 +1331,15 @@ export const VehicleScalarFieldEnum = {
   model: 'model',
   year: 'year',
   vin: 'vin',
+  height: 'height',
+  width: 'width',
+  length: 'length',
   payloadCapacity: 'payloadCapacity',
   grossWeight: 'grossWeight',
   loadingMeters: 'loadingMeters',
   volume: 'volume',
+  axles: 'axles',
+  adrClass: 'adrClass',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1461,6 +1466,20 @@ export type EnumVehicleTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pris
  * Reference to a field of type 'VehicleType[]'
  */
 export type ListEnumVehicleTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VehicleType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'AdrClass'
+ */
+export type EnumAdrClassFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AdrClass'>
+    
+
+
+/**
+ * Reference to a field of type 'AdrClass[]'
+ */
+export type ListEnumAdrClassFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AdrClass[]'>
     
 
 
