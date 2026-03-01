@@ -14,6 +14,10 @@ import { ApiTags, ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
 import { VehicleService } from './vehicle.service';
 import { CreateVehicleDto } from './dto/create-vehicle.dto';
 import { UpdateVehicleDto } from './dto/update-vehicle.dto';
+import {
+  VehicleResponseDto,
+  PaginatedVehicleResponseDto,
+} from './dto/vehicle-response.dto';
 import { OrgMemberGuard } from '../common/guards/org-member.guard';
 
 @ApiTags('Vehicles')
@@ -24,7 +28,7 @@ export class VehicleController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new vehicle' })
-  @ApiResponse({ status: 201 })
+  @ApiResponse({ status: 201, type: VehicleResponseDto })
   async create(@Body() createVehicleDto: CreateVehicleDto) {
     const { organizationId, ...vehicleData } = createVehicleDto;
     return await this.vehicleService.create(vehicleData, organizationId);
@@ -35,6 +39,7 @@ export class VehicleController {
   @ApiQuery({ name: 'organizationId', required: true, example: 'org_123abc' })
   @ApiQuery({ name: 'page', required: false, example: 1 })
   @ApiQuery({ name: 'limit', required: false, example: 20 })
+  @ApiResponse({ status: 200, type: PaginatedVehicleResponseDto })
   async findAll(
     @Query('organizationId') organizationId: string,
     @Query('page') page?: string,
@@ -50,6 +55,7 @@ export class VehicleController {
   @Get(':id')
   @ApiOperation({ summary: 'Get a vehicle by ID' })
   @ApiQuery({ name: 'organizationId', required: true, example: 'org_123abc' })
+  @ApiResponse({ status: 200, type: VehicleResponseDto })
   async findOne(
     @Param('id', ParseIntPipe) id: number,
     @Query('organizationId') organizationId: string,
@@ -60,6 +66,7 @@ export class VehicleController {
   @Patch(':id')
   @ApiOperation({ summary: 'Update a vehicle' })
   @ApiQuery({ name: 'organizationId', required: true, example: 'org_123abc' })
+  @ApiResponse({ status: 200, type: VehicleResponseDto })
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateVehicleDto: UpdateVehicleDto,
@@ -71,6 +78,7 @@ export class VehicleController {
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a vehicle' })
   @ApiQuery({ name: 'organizationId', required: true, example: 'org_123abc' })
+  @ApiResponse({ status: 200, type: VehicleResponseDto })
   async remove(
     @Param('id', ParseIntPipe) id: number,
     @Query('organizationId') organizationId: string,
