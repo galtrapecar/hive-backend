@@ -9,12 +9,33 @@ import { PrismaService } from '../prisma/prisma.service';
 export class DriverService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll(organizationId: string, page = 1, limit = 20) {
+  async findAll(organizationId: string, page = 1, limit = 20, search?: string) {
     const skip = (page - 1) * limit;
+
+    const where: any = { organizationId, role: 'driver' as const };
+
+    if (search) {
+      const profileMatches = await this.prisma.driverProfile.findMany({
+        where: {
+          organizationId,
+          fullName: { contains: search, mode: 'insensitive' },
+        },
+        select: { memberId: true },
+      });
+      const profileMemberIds = profileMatches.map((p) => p.memberId);
+
+      where.OR = [
+        { user: { name: { contains: search, mode: 'insensitive' } } },
+        { user: { email: { contains: search, mode: 'insensitive' } } },
+        ...(profileMemberIds.length > 0
+          ? [{ id: { in: profileMemberIds } }]
+          : []),
+      ];
+    }
 
     const [drivers, total] = await Promise.all([
       this.prisma.member.findMany({
-        where: { organizationId, role: 'driver' },
+        where,
         include: {
           user: {
             select: {
@@ -29,9 +50,7 @@ export class DriverService {
         take: limit,
         orderBy: { createdAt: 'desc' },
       }),
-      this.prisma.member.count({
-        where: { organizationId, role: 'driver' },
-      }),
+      this.prisma.member.count({ where }),
     ]);
 
     const memberIds = drivers.map((m) => m.id);

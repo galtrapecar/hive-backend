@@ -35,16 +35,19 @@ export class DriverController {
   @ApiQuery({ name: 'organizationId', required: true, example: 'org_123abc' })
   @ApiQuery({ name: 'page', required: false, example: 1 })
   @ApiQuery({ name: 'limit', required: false, example: 20 })
+  @ApiQuery({ name: 'search', required: false, description: 'Search by name, full name, or email' })
   @ApiResponse({ status: 200, type: PaginatedDriverResponseDto })
   async findAll(
     @Query('organizationId') organizationId: string,
     @Query('page') page?: string,
     @Query('limit') limit?: string,
+    @Query('search') search?: string,
   ) {
     return await this.driverService.findAll(
       organizationId,
       page ? +page : undefined,
       limit ? +limit : undefined,
+      search,
     );
   }
 

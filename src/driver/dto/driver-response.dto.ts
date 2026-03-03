@@ -7,7 +7,7 @@ export class DriverResponseDto {
   @ApiProperty({ example: 'driver' })
   role: string;
 
-  @ApiProperty({ example: 'John Doe', nullable: true })
+  @ApiProperty({ type: String, example: 'John Doe', nullable: true })
   fullName: string | null;
 
   @ApiProperty({ example: '2025-06-01T09:00:00.000Z' })
