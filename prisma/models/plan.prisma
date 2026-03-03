@@ -1,15 +1,20 @@
 enum PlanStatus {
-    PENDING
-    IN_PROGRESS
-    COMPLETED
+  PENDING
+  IN_PROGRESS
+  COMPLETED
 }
 
 model Plan {
-    id      Int        @id @default(autoincrement())
-    status  PlanStatus @default(PENDING)
-    orderId Int        @unique
-    order   Order      @relation(fields: [orderId], references: [id])
+  id      Int        @id @default(autoincrement())
+  status  PlanStatus @default(PENDING)
+  orderId Int        @unique
+  order   Order      @relation(fields: [orderId], references: [id])
 
-    createdAt        DateTime           @default(now())
-    updatedAt        DateTime           @updatedAt
+  driverProfileId Int?
+  driverProfile   DriverProfile? @relation(fields: [driverProfileId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([driverProfileId])
 }

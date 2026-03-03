@@ -1,8 +1,9 @@
 import { createAccessControl } from 'better-auth/plugins/access';
 import {
   defaultStatements,
+  ownerAc,
   adminAc,
-} from 'better-auth/plugins/admin/access';
+} from 'better-auth/plugins/organization/access';
 
 const statement = {
   ...defaultStatements,
@@ -15,8 +16,8 @@ const statement = {
 
 export const ac = createAccessControl(statement);
 
-export const admin = ac.newRole({
-  ...adminAc.statements,
+export const owner = ac.newRole({
+  ...ownerAc.statements,
   vehicle: ['create', 'read', 'update', 'delete'],
   order: ['create', 'read', 'update', 'delete'],
   driver: ['create', 'read', 'update', 'delete'],
@@ -24,7 +25,8 @@ export const admin = ac.newRole({
   ai: ['use'],
 });
 
-export const manager = ac.newRole({
+export const admin = ac.newRole({
+  ...adminAc.statements,
   vehicle: ['create', 'read', 'update', 'delete'],
   order: ['create', 'read', 'update', 'delete'],
   driver: ['create', 'read', 'update', 'delete'],

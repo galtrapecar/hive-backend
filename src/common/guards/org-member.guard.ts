@@ -5,11 +5,16 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import { PrismaService } from '../../prisma/prisma.service';
+import { ORG_ROLES_KEY } from '../decorators/org-roles.decorator';
 
 @Injectable()
 export class OrgMemberGuard implements CanActivate {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly reflector: Reflector,
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
@@ -27,11 +32,6 @@ export class OrgMemberGuard implements CanActivate {
       throw new UnauthorizedException('User session not found');
     }
 
-    // Admins have global access, bypass org membership check
-    if (user?.role === 'admin') {
-      return true;
-    }
-
     const member = await this.prisma.member.findFirst({
       where: {
         organizationId,
@@ -43,6 +43,22 @@ export class OrgMemberGuard implements CanActivate {
       throw new ForbiddenException(
         'You are not a member of this organization',
       );
+    }
+
+    // Check org-scoped roles if @OrgRoles is set
+    const requiredRoles = this.reflector.getAllAndOverride<string[]>(
+      ORG_ROLES_KEY,
+      [context.getHandler(), context.getClass()],
+    );
+
+    if (requiredRoles && requiredRoles.length > 0) {
+      const memberRoles = member.role.split(',').map((r) => r.trim());
+      const hasRole = requiredRoles.some((role) => memberRoles.includes(role));
+      if (!hasRole) {
+        throw new ForbiddenException(
+          'You do not have the required role in this organization',
+        );
+      }
     }
 
     return true;

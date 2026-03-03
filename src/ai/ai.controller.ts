@@ -3,6 +3,7 @@ import {
   ParseFilePipe,
   Post,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -15,11 +16,13 @@ import {
 } from '@nestjs/swagger';
 import { AiService } from './ai.service';
 import { ExtractedOrderDto } from './dto/extracted-order.dto';
-import { Roles } from '@thallesp/nestjs-better-auth';
+import { OrgRoles } from 'src/common/decorators/org-roles.decorator';
+import { OrgMemberGuard } from 'src/common/guards/org-member.guard';
 
 @ApiTags('AI')
 @Controller('ai')
-@Roles(['admin', 'manager'])
+@UseGuards(OrgMemberGuard)
+@OrgRoles(['owner'])
 export class AiController {
   constructor(private readonly aiService: AiService) {}
 

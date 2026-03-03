@@ -58,6 +58,7 @@ export const ModelName = {
   Organization: 'Organization',
   Member: 'Member',
   Invitation: 'Invitation',
+  DriverProfile: 'DriverProfile',
   Order: 'Order',
   Plan: 'Plan',
   Vehicle: 'Vehicle'
@@ -86,11 +87,7 @@ export const UserScalarFieldEnum = {
   emailVerified: 'emailVerified',
   image: 'image',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  role: 'role',
-  banned: 'banned',
-  banReason: 'banReason',
-  banExpires: 'banExpires'
+  updatedAt: 'updatedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -105,8 +102,7 @@ export const SessionScalarFieldEnum = {
   ipAddress: 'ipAddress',
   userAgent: 'userAgent',
   userId: 'userId',
-  activeOrganizationId: 'activeOrganizationId',
-  impersonatedBy: 'impersonatedBy'
+  activeOrganizationId: 'activeOrganizationId'
 } as const
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
@@ -180,6 +176,18 @@ export const InvitationScalarFieldEnum = {
 export type InvitationScalarFieldEnum = (typeof InvitationScalarFieldEnum)[keyof typeof InvitationScalarFieldEnum]
 
 
+export const DriverProfileScalarFieldEnum = {
+  id: 'id',
+  memberId: 'memberId',
+  organizationId: 'organizationId',
+  fullName: 'fullName',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DriverProfileScalarFieldEnum = (typeof DriverProfileScalarFieldEnum)[keyof typeof DriverProfileScalarFieldEnum]
+
+
 export const OrderScalarFieldEnum = {
   id: 'id',
   organizationId: 'organizationId',
@@ -206,6 +214,7 @@ export const PlanScalarFieldEnum = {
   id: 'id',
   status: 'status',
   orderId: 'orderId',
+  driverProfileId: 'driverProfileId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -233,6 +242,7 @@ export const VehicleScalarFieldEnum = {
   axles: 'axles',
   adrClass: 'adrClass',
   status: 'status',
+  driverProfileId: 'driverProfileId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

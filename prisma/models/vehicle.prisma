@@ -1,66 +1,70 @@
 enum VehicleType {
-    OTHER           // Other/miscellaneous vehicle type - various cargo
-    BOX_TRUCK       // Enclosed box truck - palletized goods, parcels, general cargo
-    WALKING_FLOOR   // Moving floor trailer - wood chips, waste, recyclables, palletized goods
-    COIL            // Coil carrier - steel coils, metal rolls, heavy industry materials
-    CONTAINER       // Container chassis - intermodal shipping containers (ISO standard)
-    CAR_TRANSPORTER // Vehicle transporter - cars, vans, light commercial vehicles
-    TANKER          // Tanker - liquids, chemicals, fuels, food-grade liquids, gases
-    TARPAULIN       // Curtainsider/tarpaulin trailer - palletized goods, machinery, mixed freight
-    FLATBED         // Open flatbed trailer - construction materials, timber, oversized loads
-    REFRIGERATOR    // Refrigerated trailer - perishable food, pharmaceuticals, temperature-sensitive goods
-    TIPPER          // Tipper/dump truck - sand, gravel, aggregates, earth, construction debris
-    SILO            // Silo/bulk carrier - cement, flour, grain, powders, granular materials
+  OTHER // Other/miscellaneous vehicle type - various cargo
+  BOX_TRUCK // Enclosed box truck - palletized goods, parcels, general cargo
+  WALKING_FLOOR // Moving floor trailer - wood chips, waste, recyclables, palletized goods
+  COIL // Coil carrier - steel coils, metal rolls, heavy industry materials
+  CONTAINER // Container chassis - intermodal shipping containers (ISO standard)
+  CAR_TRANSPORTER // Vehicle transporter - cars, vans, light commercial vehicles
+  TANKER // Tanker - liquids, chemicals, fuels, food-grade liquids, gases
+  TARPAULIN // Curtainsider/tarpaulin trailer - palletized goods, machinery, mixed freight
+  FLATBED // Open flatbed trailer - construction materials, timber, oversized loads
+  REFRIGERATOR // Refrigerated trailer - perishable food, pharmaceuticals, temperature-sensitive goods
+  TIPPER // Tipper/dump truck - sand, gravel, aggregates, earth, construction debris
+  SILO // Silo/bulk carrier - cement, flour, grain, powders, granular materials
 }
 
 enum AdrClass {
-    CLASS_1   // Explosives
-    CLASS_2   // Gases
-    CLASS_3   // Flammable liquids
-    CLASS_4   // Flammable solids
-    CLASS_5   // Oxidizing substances and organic peroxides
-    CLASS_6   // Toxic and infectious substances
-    CLASS_7   // Radioactive material
-    CLASS_8   // Corrosive substances
-    CLASS_9   // Miscellaneous dangerous substances
+  CLASS_1 // Explosives
+  CLASS_2 // Gases
+  CLASS_3 // Flammable liquids
+  CLASS_4 // Flammable solids
+  CLASS_5 // Oxidizing substances and organic peroxides
+  CLASS_6 // Toxic and infectious substances
+  CLASS_7 // Radioactive material
+  CLASS_8 // Corrosive substances
+  CLASS_9 // Miscellaneous dangerous substances
 }
 
 enum VehicleStatus {
-    ACTIVE
-    INACTIVE
+  ACTIVE
+  INACTIVE
 }
 
 model Vehicle {
-    id             Int           @id @default(autoincrement())
-    organizationId String
-    organization   Organization  @relation(fields: [organizationId], references: [id])
+  id             Int          @id @default(autoincrement())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
 
-    // Identification
-    registrationPlate String
-    internalNumber    String?
-    type              VehicleType
-    make              String?
-    model             String?
-    year              Int?
-    vin               String?
+  // Identification
+  registrationPlate String
+  internalNumber    String?
+  type              VehicleType
+  make              String?
+  model             String?
+  year              Int?
+  vin               String?
 
-    // Dimensions
-    height            Float?      // m
-    width             Float?      // m
-    length            Float?      // m
+  // Dimensions
+  height Float? // m
+  width  Float? // m
+  length Float? // m
 
-    // Operational
-    payloadCapacity   Int?        // kg
-    grossWeight       Int?        // kg
-    loadingMeters     Float?      // ldm
-    volume            Float?      // m³
-    axles             Int?
-    adrClass          AdrClass?
+  // Operational
+  payloadCapacity Int? // kg
+  grossWeight     Int? // kg
+  loadingMeters   Float? // ldm
+  volume          Float? // m³
+  axles           Int?
+  adrClass        AdrClass?
 
-    status            VehicleStatus @default(ACTIVE)
+  status VehicleStatus @default(ACTIVE)
 
-    createdAt         DateTime      @default(now())
-    updatedAt         DateTime      @updatedAt
+  driverProfileId Int?
+  driverProfile   DriverProfile? @relation(fields: [driverProfileId], references: [id], onDelete: SetNull)
 
-    @@index([organizationId])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId])
+  @@index([driverProfileId])
 }

@@ -18,13 +18,13 @@ import {
   VehicleResponseDto,
   PaginatedVehicleResponseDto,
 } from './dto/vehicle-response.dto';
-import { Roles } from '@thallesp/nestjs-better-auth';
 import { OrgMemberGuard } from '../common/guards/org-member.guard';
+import { OrgRoles } from 'src/common/decorators/org-roles.decorator';
 
 @ApiTags('Vehicles')
 @Controller('vehicle')
 @UseGuards(OrgMemberGuard)
-@Roles(['admin', 'manager'])
+@OrgRoles(['owner'])
 export class VehicleController {
   constructor(private readonly vehicleService: VehicleService) {}
 
@@ -37,7 +37,9 @@ export class VehicleController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'Get all vehicles for current organization (paginated)' })
+  @ApiOperation({
+    summary: 'Get all vehicles for current organization (paginated)',
+  })
   @ApiQuery({ name: 'organizationId', required: true, example: 'org_123abc' })
   @ApiQuery({ name: 'page', required: false, example: 1 })
   @ApiQuery({ name: 'limit', required: false, example: 20 })
@@ -74,7 +76,11 @@ export class VehicleController {
     @Body() updateVehicleDto: UpdateVehicleDto,
     @Query('organizationId') organizationId: string,
   ) {
-    return await this.vehicleService.update(organizationId, id, updateVehicleDto);
+    return await this.vehicleService.update(
+      organizationId,
+      id,
+      updateVehicleDto,
+    );
   }
 
   @Delete(':id')

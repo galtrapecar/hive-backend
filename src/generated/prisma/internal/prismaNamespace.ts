@@ -391,6 +391,7 @@ export const ModelName = {
   Organization: 'Organization',
   Member: 'Member',
   Invitation: 'Invitation',
+  DriverProfile: 'DriverProfile',
   Order: 'Order',
   Plan: 'Plan',
   Vehicle: 'Vehicle'
@@ -409,7 +410,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "account" | "verification" | "organization" | "member" | "invitation" | "order" | "plan" | "vehicle"
+    modelProps: "user" | "session" | "account" | "verification" | "organization" | "member" | "invitation" | "driverProfile" | "order" | "plan" | "vehicle"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -931,6 +932,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DriverProfile: {
+      payload: Prisma.$DriverProfilePayload<ExtArgs>
+      fields: Prisma.DriverProfileFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DriverProfileFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverProfilePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DriverProfileFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverProfilePayload>
+        }
+        findFirst: {
+          args: Prisma.DriverProfileFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverProfilePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DriverProfileFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverProfilePayload>
+        }
+        findMany: {
+          args: Prisma.DriverProfileFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverProfilePayload>[]
+        }
+        create: {
+          args: Prisma.DriverProfileCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverProfilePayload>
+        }
+        createMany: {
+          args: Prisma.DriverProfileCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DriverProfileCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverProfilePayload>[]
+        }
+        delete: {
+          args: Prisma.DriverProfileDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverProfilePayload>
+        }
+        update: {
+          args: Prisma.DriverProfileUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverProfilePayload>
+        }
+        deleteMany: {
+          args: Prisma.DriverProfileDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DriverProfileUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DriverProfileUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverProfilePayload>[]
+        }
+        upsert: {
+          args: Prisma.DriverProfileUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverProfilePayload>
+        }
+        aggregate: {
+          args: Prisma.DriverProfileAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDriverProfile>
+        }
+        groupBy: {
+          args: Prisma.DriverProfileGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DriverProfileGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DriverProfileCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DriverProfileCountAggregateOutputType> | number
+        }
+      }
+    }
     Order: {
       payload: Prisma.$OrderPayload<ExtArgs>
       fields: Prisma.OrderFieldRefs
@@ -1199,11 +1274,7 @@ export const UserScalarFieldEnum = {
   emailVerified: 'emailVerified',
   image: 'image',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  role: 'role',
-  banned: 'banned',
-  banReason: 'banReason',
-  banExpires: 'banExpires'
+  updatedAt: 'updatedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -1218,8 +1289,7 @@ export const SessionScalarFieldEnum = {
   ipAddress: 'ipAddress',
   userAgent: 'userAgent',
   userId: 'userId',
-  activeOrganizationId: 'activeOrganizationId',
-  impersonatedBy: 'impersonatedBy'
+  activeOrganizationId: 'activeOrganizationId'
 } as const
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
@@ -1293,6 +1363,18 @@ export const InvitationScalarFieldEnum = {
 export type InvitationScalarFieldEnum = (typeof InvitationScalarFieldEnum)[keyof typeof InvitationScalarFieldEnum]
 
 
+export const DriverProfileScalarFieldEnum = {
+  id: 'id',
+  memberId: 'memberId',
+  organizationId: 'organizationId',
+  fullName: 'fullName',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DriverProfileScalarFieldEnum = (typeof DriverProfileScalarFieldEnum)[keyof typeof DriverProfileScalarFieldEnum]
+
+
 export const OrderScalarFieldEnum = {
   id: 'id',
   organizationId: 'organizationId',
@@ -1319,6 +1401,7 @@ export const PlanScalarFieldEnum = {
   id: 'id',
   status: 'status',
   orderId: 'orderId',
+  driverProfileId: 'driverProfileId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1346,6 +1429,7 @@ export const VehicleScalarFieldEnum = {
   axles: 'axles',
   adrClass: 'adrClass',
   status: 'status',
+  driverProfileId: 'driverProfileId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1603,6 +1687,7 @@ export type GlobalOmitConfig = {
   organization?: Prisma.OrganizationOmit
   member?: Prisma.MemberOmit
   invitation?: Prisma.InvitationOmit
+  driverProfile?: Prisma.DriverProfileOmit
   order?: Prisma.OrderOmit
   plan?: Prisma.PlanOmit
   vehicle?: Prisma.VehicleOmit

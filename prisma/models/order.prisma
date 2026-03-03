@@ -1,20 +1,20 @@
 model Order {
-    id                  Int             @id @default(autoincrement())
-    organizationId      String
-    customer            String
-    price               Int
-    weight              Int
-    pickupPoint         String
-    pickupLat           Float?
-    pickupLng           Float?
-    pickupTime          DateTime
-    dropoffPoint        String
-    dropoffLat          Float?
-    dropoffLng          Float?
-    dropoffTime         DateTime
-    description         String?
-    plan                Plan?
+  id             Int      @id @default(autoincrement())
+  organizationId String
+  customer       String
+  price          Int
+  weight         Int
+  pickupPoint    String
+  pickupLat      Float?
+  pickupLng      Float?
+  pickupTime     DateTime
+  dropoffPoint   String
+  dropoffLat     Float?
+  dropoffLng     Float?
+  dropoffTime    DateTime
+  description    String?
+  plan           Plan?
 
-    createdAt           DateTime        @default(now())
-    updatedAt           DateTime        @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

@@ -1,7 +1,7 @@
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
-import { organization, admin } from 'better-auth/plugins';
-import { ac, admin as adminRole, manager, driver } from './permissions';
+import { organization } from 'better-auth/plugins';
+import { ac, owner, admin, driver } from './permissions';
 import { PrismaClient } from '../generated/prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { Pool } from 'pg';
@@ -23,19 +23,33 @@ export const auth = betterAuth({
   trustedOrigins: ['http://localhost:5173'],
   plugins: [
     organization({
-      allowUserToCreateOrganization: true,
+      allowUserToCreateOrganization: async (user) => {
+        const driverMembership = await prisma.member.findFirst({
+          where: { userId: user.id, role: 'driver' },
+        });
+        return !driverMembership;
+      },
+      organizationHooks: {
+        async afterAcceptInvitation({ member, user, organization }) {
+          await prisma.driverProfile.create({
+            data: {
+              memberId: member.id,
+              organizationId: organization.id,
+              fullName: user.name,
+            },
+          });
+        },
+      },
       organizationLimit: 5,
-      creatorRole: 'manager',
+      creatorRole: 'owner',
+      memberRole: 'driver',
       membershipLimit: 100,
-    }),
-    admin({
       ac,
       roles: {
-        admin: adminRole,
-        manager,
+        owner,
+        admin,
         driver,
       },
-      defaultRole: 'driver',
     }),
   ],
 });

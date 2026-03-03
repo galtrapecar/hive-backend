@@ -1,12 +1,12 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Roles } from '@thallesp/nestjs-better-auth';
 import { RoutingService } from './routing.service';
 import { GeocodeResponseItemDto } from './dto/geocode.dto';
+import { OrgRoles } from 'src/common/decorators/org-roles.decorator';
 
 @ApiTags('Routing')
 @Controller('routing')
-@Roles(['admin', 'manager'])
+@OrgRoles(['owner'])
 export class RoutingController {
   constructor(private readonly routingService: RoutingService) {}
 
@@ -19,7 +19,10 @@ export class RoutingController {
     @Query('q') query: string,
     @Query('limit') limit?: number,
   ): Promise<GeocodeResponseItemDto[]> {
-    return this.routingService.geocode(query, limit ? Number(limit) : undefined);
+    return this.routingService.geocode(
+      query,
+      limit ? Number(limit) : undefined,
+    );
   }
 
   @Get('reverse-geocode')

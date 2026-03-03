@@ -18,13 +18,13 @@ import {
   OrderResponseDto,
   PaginatedOrderResponseDto,
 } from './dto/order-response.dto';
-import { Roles } from '@thallesp/nestjs-better-auth';
 import { OrgMemberGuard } from '../common/guards/org-member.guard';
+import { OrgRoles } from 'src/common/decorators/org-roles.decorator';
 
 @ApiTags('Orders')
 @Controller('order')
 @UseGuards(OrgMemberGuard)
-@Roles(['admin', 'manager'])
+@OrgRoles(['owner'])
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
@@ -33,7 +33,10 @@ export class OrderController {
   @ApiResponse({ status: 201, type: OrderResponseDto })
   async create(@Body() createOrderDto: CreateOrderDto) {
     const { organizationId, ...orderData } = createOrderDto;
-    return await this.orderService.create(orderData as CreateOrderDto, organizationId);
+    return await this.orderService.create(
+      orderData as CreateOrderDto,
+      organizationId,
+    );
   }
 
   @Get()

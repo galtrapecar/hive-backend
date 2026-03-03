@@ -1,0 +1,14 @@
+model DriverProfile {
+  id             Int    @id @default(autoincrement())
+  memberId       String @unique
+  organizationId String
+  fullName       String
+
+  vehicles Vehicle[]
+  plans    Plan[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId])
+}

@@ -1,3 +1,15 @@
+-- CreateEnum
+CREATE TYPE "PlanStatus" AS ENUM ('PENDING', 'IN_PROGRESS', 'COMPLETED');
+
+-- CreateEnum
+CREATE TYPE "VehicleType" AS ENUM ('OTHER', 'BOX_TRUCK', 'WALKING_FLOOR', 'COIL', 'CONTAINER', 'CAR_TRANSPORTER', 'TANKER', 'TARPAULIN', 'FLATBED', 'REFRIGERATOR', 'TIPPER', 'SILO');
+
+-- CreateEnum
+CREATE TYPE "AdrClass" AS ENUM ('CLASS_1', 'CLASS_2', 'CLASS_3', 'CLASS_4', 'CLASS_5', 'CLASS_6', 'CLASS_7', 'CLASS_8', 'CLASS_9');
+
+-- CreateEnum
+CREATE TYPE "VehicleStatus" AS ENUM ('ACTIVE', 'INACTIVE');
+
 -- CreateTable
 CREATE TABLE "user" (
     "id" TEXT NOT NULL,
@@ -95,18 +107,77 @@ CREATE TABLE "invitation" (
 );
 
 -- CreateTable
-CREATE TABLE "Plan" (
+CREATE TABLE "DriverProfile" (
     "id" SERIAL NOT NULL,
+    "memberId" TEXT NOT NULL,
+    "organizationId" TEXT NOT NULL,
+    "fullName" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "DriverProfile_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Order" (
+    "id" SERIAL NOT NULL,
+    "organizationId" TEXT NOT NULL,
     "customer" TEXT NOT NULL,
     "price" INTEGER NOT NULL,
     "weight" INTEGER NOT NULL,
     "pickupPoint" TEXT NOT NULL,
+    "pickupLat" DOUBLE PRECISION,
+    "pickupLng" DOUBLE PRECISION,
     "pickupTime" TIMESTAMP(3) NOT NULL,
     "dropoffPoint" TEXT NOT NULL,
+    "dropoffLat" DOUBLE PRECISION,
+    "dropoffLng" DOUBLE PRECISION,
     "dropoffTime" TIMESTAMP(3) NOT NULL,
     "description" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Plan" (
+    "id" SERIAL NOT NULL,
+    "status" "PlanStatus" NOT NULL DEFAULT 'PENDING',
+    "orderId" INTEGER NOT NULL,
+    "driverProfileId" INTEGER,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Plan_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Vehicle" (
+    "id" SERIAL NOT NULL,
+    "organizationId" TEXT NOT NULL,
+    "registrationPlate" TEXT NOT NULL,
+    "internalNumber" TEXT,
+    "type" "VehicleType" NOT NULL,
+    "make" TEXT,
+    "model" TEXT,
+    "year" INTEGER,
+    "vin" TEXT,
+    "height" DOUBLE PRECISION,
+    "width" DOUBLE PRECISION,
+    "length" DOUBLE PRECISION,
+    "payloadCapacity" INTEGER,
+    "grossWeight" INTEGER,
+    "loadingMeters" DOUBLE PRECISION,
+    "volume" DOUBLE PRECISION,
+    "axles" INTEGER,
+    "adrClass" "AdrClass",
+    "status" "VehicleStatus" NOT NULL DEFAULT 'ACTIVE',
+    "driverProfileId" INTEGER,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Vehicle_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -139,6 +210,24 @@ CREATE INDEX "invitation_organizationId_idx" ON "invitation"("organizationId");
 -- CreateIndex
 CREATE INDEX "invitation_email_idx" ON "invitation"("email");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "DriverProfile_memberId_key" ON "DriverProfile"("memberId");
+
+-- CreateIndex
+CREATE INDEX "DriverProfile_organizationId_idx" ON "DriverProfile"("organizationId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Plan_orderId_key" ON "Plan"("orderId");
+
+-- CreateIndex
+CREATE INDEX "Plan_driverProfileId_idx" ON "Plan"("driverProfileId");
+
+-- CreateIndex
+CREATE INDEX "Vehicle_organizationId_idx" ON "Vehicle"("organizationId");
+
+-- CreateIndex
+CREATE INDEX "Vehicle_driverProfileId_idx" ON "Vehicle"("driverProfileId");
+
 -- AddForeignKey
 ALTER TABLE "session" ADD CONSTRAINT "session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -156,3 +245,15 @@ ALTER TABLE "invitation" ADD CONSTRAINT "invitation_organizationId_fkey" FOREIGN
 
 -- AddForeignKey
 ALTER TABLE "invitation" ADD CONSTRAINT "invitation_inviterId_fkey" FOREIGN KEY ("inviterId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Plan" ADD CONSTRAINT "Plan_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "Order"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Plan" ADD CONSTRAINT "Plan_driverProfileId_fkey" FOREIGN KEY ("driverProfileId") REFERENCES "DriverProfile"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Vehicle" ADD CONSTRAINT "Vehicle_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "organization"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Vehicle" ADD CONSTRAINT "Vehicle_driverProfileId_fkey" FOREIGN KEY ("driverProfileId") REFERENCES "DriverProfile"("id") ON DELETE SET NULL ON UPDATE CASCADE;

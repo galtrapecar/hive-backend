@@ -75,6 +75,11 @@ export type Member = Prisma.MemberModel
  */
 export type Invitation = Prisma.InvitationModel
 /**
+ * Model DriverProfile
+ * 
+ */
+export type DriverProfile = Prisma.DriverProfileModel
+/**
  * Model Order
  * 
  */
