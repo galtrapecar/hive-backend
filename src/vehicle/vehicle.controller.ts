@@ -18,11 +18,13 @@ import {
   VehicleResponseDto,
   PaginatedVehicleResponseDto,
 } from './dto/vehicle-response.dto';
+import { Roles } from '@thallesp/nestjs-better-auth';
 import { OrgMemberGuard } from '../common/guards/org-member.guard';
 
 @ApiTags('Vehicles')
 @Controller('vehicle')
 @UseGuards(OrgMemberGuard)
+@Roles(['admin', 'manager'])
 export class VehicleController {
   constructor(private readonly vehicleService: VehicleService) {}
 

@@ -10,6 +10,8 @@ import { PrismaModule } from './prisma/prisma.module';
 import { OrderModule } from './order/order.module';
 import { RoutingModule } from './routing/routing.module';
 import { VehicleModule } from './vehicle/vehicle.module';
+import { DriverModule } from './driver/driver.module';
+import { MobileController } from './mobile/mobile.controller';
 
 @Module({
   imports: [
@@ -21,8 +23,9 @@ import { VehicleModule } from './vehicle/vehicle.module';
     OrderModule,
     RoutingModule,
     VehicleModule,
+    DriverModule,
   ],
-  controllers: [AppController, AiController],
+  controllers: [AppController, AiController, MobileController],
   providers: [AppService, AiService],
 })
 export class AppModule {}

@@ -21,9 +21,15 @@ export class OrgMemberGuard implements CanActivate {
       throw new UnauthorizedException('organizationId is required');
     }
 
-    const userId = request.user?.id ?? request.session?.user?.id;
+    const user = request.user ?? request.session?.user;
+    const userId = user?.id;
     if (!userId) {
       throw new UnauthorizedException('User session not found');
+    }
+
+    // Admins have global access, bypass org membership check
+    if (user?.role === 'admin') {
+      return true;
     }
 
     const member = await this.prisma.member.findFirst({

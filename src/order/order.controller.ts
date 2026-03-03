@@ -18,11 +18,13 @@ import {
   OrderResponseDto,
   PaginatedOrderResponseDto,
 } from './dto/order-response.dto';
+import { Roles } from '@thallesp/nestjs-better-auth';
 import { OrgMemberGuard } from '../common/guards/org-member.guard';
 
 @ApiTags('Orders')
 @Controller('order')
 @UseGuards(OrgMemberGuard)
+@Roles(['admin', 'manager'])
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 

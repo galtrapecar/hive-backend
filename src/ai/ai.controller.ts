@@ -15,15 +15,15 @@ import {
 } from '@nestjs/swagger';
 import { AiService } from './ai.service';
 import { ExtractedOrderDto } from './dto/extracted-order.dto';
-import { AllowAnonymous } from '@thallesp/nestjs-better-auth';
+import { Roles } from '@thallesp/nestjs-better-auth';
 
 @ApiTags('AI')
 @Controller('ai')
+@Roles(['admin', 'manager'])
 export class AiController {
   constructor(private readonly aiService: AiService) {}
 
   @Post('/extract-order')
-  @AllowAnonymous()
   @UseInterceptors(FileInterceptor('file'))
   @ApiOperation({ summary: 'Extract order details from an uploaded file' })
   @ApiConsumes('multipart/form-data')

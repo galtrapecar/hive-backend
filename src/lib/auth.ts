@@ -1,6 +1,7 @@
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
-import { organization } from 'better-auth/plugins';
+import { organization, admin } from 'better-auth/plugins';
+import { ac, admin as adminRole, manager, driver } from './permissions';
 import { PrismaClient } from '../generated/prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { Pool } from 'pg';
@@ -24,8 +25,17 @@ export const auth = betterAuth({
     organization({
       allowUserToCreateOrganization: true,
       organizationLimit: 5,
-      creatorRole: 'owner',
+      creatorRole: 'manager',
       membershipLimit: 100,
+    }),
+    admin({
+      ac,
+      roles: {
+        admin: adminRole,
+        manager,
+        driver,
+      },
+      defaultRole: 'driver',
     }),
   ],
 });

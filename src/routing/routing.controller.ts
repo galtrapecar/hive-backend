@@ -1,10 +1,12 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Roles } from '@thallesp/nestjs-better-auth';
 import { RoutingService } from './routing.service';
 import { GeocodeResponseItemDto } from './dto/geocode.dto';
 
 @ApiTags('Routing')
 @Controller('routing')
+@Roles(['admin', 'manager'])
 export class RoutingController {
   constructor(private readonly routingService: RoutingService) {}
 
