@@ -1,5 +1,25 @@
 import { ApiProperty } from '@nestjs/swagger';
 
+export class DriverProfileDto {
+  @ApiProperty({ example: 1 })
+  id: number;
+
+  @ApiProperty({ example: 'mem_abc123' })
+  memberId: string;
+
+  @ApiProperty({ example: 'org_123abc' })
+  organizationId: string;
+
+  @ApiProperty({ example: 'John Doe' })
+  fullName: string;
+
+  @ApiProperty({ example: '2025-06-01T09:00:00.000Z' })
+  createdAt: Date;
+
+  @ApiProperty({ example: '2025-06-01T09:00:00.000Z' })
+  updatedAt: Date;
+}
+
 export class DriverResponseDto {
   @ApiProperty({ example: 'mem_abc123' })
   memberId: string;

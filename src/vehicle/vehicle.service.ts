@@ -7,7 +7,10 @@ import { UpdateVehicleDto } from './dto/update-vehicle.dto';
 export class VehicleService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createVehicleDto: Omit<CreateVehicleDto, 'organizationId'>, organizationId: string) {
+  async create(
+    createVehicleDto: Omit<CreateVehicleDto, 'organizationId'>,
+    organizationId: string,
+  ) {
     return this.prisma.vehicle.create({
       data: {
         ...createVehicleDto,
@@ -25,6 +28,7 @@ export class VehicleService {
         skip,
         take: limit,
         orderBy: { createdAt: 'desc' },
+        include: { driverProfile: true },
       }),
       this.prisma.vehicle.count({
         where: { organizationId },
@@ -56,7 +60,11 @@ export class VehicleService {
     return vehicle;
   }
 
-  async update(organizationId: string, id: number, updateVehicleDto: UpdateVehicleDto) {
+  async update(
+    organizationId: string,
+    id: number,
+    updateVehicleDto: UpdateVehicleDto,
+  ) {
     await this.findOne(organizationId, id);
 
     return this.prisma.vehicle.update({

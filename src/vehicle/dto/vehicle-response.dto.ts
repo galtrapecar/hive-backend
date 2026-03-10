@@ -4,6 +4,7 @@ import {
   VehicleStatus,
   AdrClass,
 } from 'src/generated/prisma/client';
+import { DriverProfileDto } from 'src/driver/dto/driver-response.dto';
 
 export class VehicleResponseDto {
   @ApiProperty({ example: 1 })
@@ -108,6 +109,13 @@ export class VehicleResponseDto {
     description: 'ADR dangerous goods class',
   })
   adrClass: AdrClass | null;
+
+  @ApiPropertyOptional({
+    type: DriverProfileDto,
+    nullable: true,
+    description: 'Driver profile if assigned',
+  })
+  driverProfile: DriverProfileDto | null;
 
   @ApiProperty({ enum: VehicleStatus, example: VehicleStatus.ACTIVE })
   status: VehicleStatus;

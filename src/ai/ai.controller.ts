@@ -2,6 +2,7 @@ import {
   Controller,
   ParseFilePipe,
   Post,
+  Query,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -13,6 +14,7 @@ import {
   ApiConsumes,
   ApiBody,
   ApiResponse,
+  ApiQuery,
 } from '@nestjs/swagger';
 import { AiService } from './ai.service';
 import { ExtractedOrderDto } from './dto/extracted-order.dto';
@@ -27,6 +29,7 @@ export class AiController {
   constructor(private readonly aiService: AiService) {}
 
   @Post('/extract-order')
+  @ApiQuery({ name: 'organizationId', required: true, example: 'org_123abc' })
   @UseInterceptors(FileInterceptor('file'))
   @ApiOperation({ summary: 'Extract order details from an uploaded file' })
   @ApiConsumes('multipart/form-data')
