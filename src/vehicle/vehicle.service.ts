@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateVehicleDto } from './dto/create-vehicle.dto';
 import { UpdateVehicleDto } from './dto/update-vehicle.dto';
@@ -11,6 +11,16 @@ export class VehicleService {
     createVehicleDto: Omit<CreateVehicleDto, 'organizationId'>,
     organizationId: string,
   ) {
+    const existing = await this.prisma.vehicle.findUnique({
+      where: { registrationPlate: createVehicleDto.registrationPlate },
+    });
+
+    if (existing) {
+      throw new BadRequestException(
+        `A vehicle with registration plate "${createVehicleDto.registrationPlate}" already exists`,
+      );
+    }
+
     return this.prisma.vehicle.create({
       data: {
         ...createVehicleDto,
@@ -66,6 +76,18 @@ export class VehicleService {
     updateVehicleDto: UpdateVehicleDto,
   ) {
     await this.findOne(organizationId, id);
+
+    if (updateVehicleDto.registrationPlate) {
+      const existing = await this.prisma.vehicle.findUnique({
+        where: { registrationPlate: updateVehicleDto.registrationPlate },
+      });
+
+      if (existing && existing.id !== id) {
+        throw new BadRequestException(
+          `A vehicle with registration plate "${updateVehicleDto.registrationPlate}" already exists`,
+        );
+      }
+    }
 
     return this.prisma.vehicle.update({
       where: { id },
