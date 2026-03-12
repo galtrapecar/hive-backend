@@ -59,6 +59,8 @@ export const ModelName = {
   Member: 'Member',
   Invitation: 'Invitation',
   DriverProfile: 'DriverProfile',
+  DriverSchedule: 'DriverSchedule',
+  DriverCalendarEvent: 'DriverCalendarEvent',
   Order: 'Order',
   Plan: 'Plan',
   Vehicle: 'Vehicle'
@@ -186,6 +188,33 @@ export const DriverProfileScalarFieldEnum = {
 } as const
 
 export type DriverProfileScalarFieldEnum = (typeof DriverProfileScalarFieldEnum)[keyof typeof DriverProfileScalarFieldEnum]
+
+
+export const DriverScheduleScalarFieldEnum = {
+  id: 'id',
+  driverProfileId: 'driverProfileId',
+  workDays: 'workDays',
+  offDays: 'offDays',
+  startDate: 'startDate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DriverScheduleScalarFieldEnum = (typeof DriverScheduleScalarFieldEnum)[keyof typeof DriverScheduleScalarFieldEnum]
+
+
+export const DriverCalendarEventScalarFieldEnum = {
+  id: 'id',
+  driverProfileId: 'driverProfileId',
+  type: 'type',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  note: 'note',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DriverCalendarEventScalarFieldEnum = (typeof DriverCalendarEventScalarFieldEnum)[keyof typeof DriverCalendarEventScalarFieldEnum]
 
 
 export const OrderScalarFieldEnum = {

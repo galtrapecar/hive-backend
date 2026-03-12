@@ -80,6 +80,16 @@ export type Invitation = Prisma.InvitationModel
  */
 export type DriverProfile = Prisma.DriverProfileModel
 /**
+ * Model DriverSchedule
+ * 
+ */
+export type DriverSchedule = Prisma.DriverScheduleModel
+/**
+ * Model DriverCalendarEvent
+ * 
+ */
+export type DriverCalendarEvent = Prisma.DriverCalendarEventModel
+/**
  * Model Order
  * 
  */

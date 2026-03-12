@@ -9,6 +9,14 @@
 * 🟢 You can import this file directly.
 */
 
+export const CalendarEventType = {
+  SICK_LEAVE: 'SICK_LEAVE',
+  VACATION: 'VACATION'
+} as const
+
+export type CalendarEventType = (typeof CalendarEventType)[keyof typeof CalendarEventType]
+
+
 export const PlanStatus = {
   PENDING: 'PENDING',
   IN_PROGRESS: 'IN_PROGRESS',

@@ -175,6 +175,23 @@ export type IntWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedIntFilter<$PrismaModel>
 }
 
+export type EnumCalendarEventTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.CalendarEventType | Prisma.EnumCalendarEventTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CalendarEventType[] | Prisma.ListEnumCalendarEventTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CalendarEventType[] | Prisma.ListEnumCalendarEventTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCalendarEventTypeFilter<$PrismaModel> | $Enums.CalendarEventType
+}
+
+export type EnumCalendarEventTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CalendarEventType | Prisma.EnumCalendarEventTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CalendarEventType[] | Prisma.ListEnumCalendarEventTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CalendarEventType[] | Prisma.ListEnumCalendarEventTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCalendarEventTypeWithAggregatesFilter<$PrismaModel> | $Enums.CalendarEventType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCalendarEventTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCalendarEventTypeFilter<$PrismaModel>
+}
+
 export type FloatNullableFilter<$PrismaModel = never> = {
   equals?: number | Prisma.FloatFieldRefInput<$PrismaModel> | null
   in?: number[] | Prisma.ListFloatFieldRefInput<$PrismaModel> | null
@@ -469,6 +486,23 @@ export type NestedFloatFilter<$PrismaModel = never> = {
   gt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   gte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   not?: Prisma.NestedFloatFilter<$PrismaModel> | number
+}
+
+export type NestedEnumCalendarEventTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.CalendarEventType | Prisma.EnumCalendarEventTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CalendarEventType[] | Prisma.ListEnumCalendarEventTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CalendarEventType[] | Prisma.ListEnumCalendarEventTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCalendarEventTypeFilter<$PrismaModel> | $Enums.CalendarEventType
+}
+
+export type NestedEnumCalendarEventTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CalendarEventType | Prisma.EnumCalendarEventTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CalendarEventType[] | Prisma.ListEnumCalendarEventTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CalendarEventType[] | Prisma.ListEnumCalendarEventTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCalendarEventTypeWithAggregatesFilter<$PrismaModel> | $Enums.CalendarEventType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCalendarEventTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCalendarEventTypeFilter<$PrismaModel>
 }
 
 export type NestedFloatNullableFilter<$PrismaModel = never> = {

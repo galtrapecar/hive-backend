@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { CalendarEventType } from '../generated/prisma/client';
 
 @Injectable()
 export class DriverService {
@@ -238,11 +239,7 @@ export class DriverService {
     return { data: profile.vehicles };
   }
 
-  async assignPlan(
-    organizationId: string,
-    memberId: string,
-    planId: number,
-  ) {
+  async assignPlan(organizationId: string, memberId: string, planId: number) {
     const profile = await this.getOrCreateProfile(memberId, organizationId);
 
     const plan = await this.prisma.plan.findFirst({
@@ -261,11 +258,7 @@ export class DriverService {
     return { message: 'Plan assigned to driver' };
   }
 
-  async unassignPlan(
-    organizationId: string,
-    memberId: string,
-    planId: number,
-  ) {
+  async unassignPlan(organizationId: string, memberId: string, planId: number) {
     const profile = await this.prisma.driverProfile.findFirst({
       where: { memberId, organizationId },
     });
@@ -301,5 +294,147 @@ export class DriverService {
     }
 
     return { data: profile.plans };
+  }
+
+  // --- Schedule ---
+
+  async setSchedule(
+    organizationId: string,
+    memberId: string,
+    workDays: number,
+    offDays: number,
+    startDate: string,
+  ) {
+    const profile = await this.getOrCreateProfile(memberId, organizationId);
+
+    await this.prisma.driverSchedule.upsert({
+      where: { driverProfileId: profile.id },
+      create: {
+        driverProfileId: profile.id,
+        workDays,
+        offDays,
+        startDate: new Date(startDate),
+      },
+      update: {
+        workDays,
+        offDays,
+        startDate: new Date(startDate),
+      },
+    });
+
+    return { message: 'Schedule updated' };
+  }
+
+  async getSchedule(organizationId: string, memberId: string) {
+    const profile = await this.prisma.driverProfile.findFirst({
+      where: { memberId, organizationId },
+      include: { schedule: true },
+    });
+
+    if (!profile) {
+      return { data: null };
+    }
+
+    return { data: profile.schedule };
+  }
+
+  async removeSchedule(organizationId: string, memberId: string) {
+    const profile = await this.prisma.driverProfile.findFirst({
+      where: { memberId, organizationId },
+      include: { schedule: true },
+    });
+
+    if (!profile || !profile.schedule) {
+      throw new NotFoundException('Schedule not found for this driver');
+    }
+
+    await this.prisma.driverSchedule.delete({
+      where: { id: profile.schedule.id },
+    });
+
+    return { message: 'Schedule removed' };
+  }
+
+  // --- Calendar Events ---
+
+  async createCalendarEvent(
+    organizationId: string,
+    memberId: string,
+    type: CalendarEventType,
+    startDate: string,
+    endDate: string,
+    note?: string,
+  ) {
+    const profile = await this.getOrCreateProfile(memberId, organizationId);
+
+    const event = await this.prisma.driverCalendarEvent.create({
+      data: {
+        driverProfileId: profile.id,
+        type,
+        startDate: new Date(startDate),
+        endDate: new Date(endDate),
+        note,
+      },
+    });
+
+    return { data: event };
+  }
+
+  async findCalendarEvents(
+    organizationId: string,
+    memberId: string,
+    from?: string,
+    to?: string,
+  ) {
+    const profile = await this.prisma.driverProfile.findFirst({
+      where: { memberId, organizationId },
+    });
+
+    if (!profile) {
+      return { data: [] };
+    }
+
+    const where: any = { driverProfileId: profile.id };
+
+    if (from || to) {
+      where.startDate = {};
+      if (from) where.startDate.gte = new Date(from);
+      if (to) where.startDate.lte = new Date(to);
+    }
+
+    const events = await this.prisma.driverCalendarEvent.findMany({
+      where,
+      orderBy: { startDate: 'asc' },
+    });
+
+    return { data: events };
+  }
+
+  async removeCalendarEvent(
+    organizationId: string,
+    memberId: string,
+    eventId: number,
+  ) {
+    const profile = await this.prisma.driverProfile.findFirst({
+      where: { memberId, organizationId },
+    });
+
+    if (!profile) {
+      throw new NotFoundException('Driver profile not found');
+    }
+
+    const event = await this.prisma.driverCalendarEvent.findFirst({
+      where: { id: eventId, driverProfileId: profile.id },
+    });
+
+    if (!event) {
+      throw new NotFoundException('Calendar event not found');
+    }
+
+    await this.prisma.driverCalendarEvent.delete({
+      where: { id: eventId },
+    });
+
+    return { message: 'Calendar event removed' };
   }
 }

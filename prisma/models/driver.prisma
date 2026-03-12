@@ -4,11 +4,49 @@ model DriverProfile {
   organizationId String
   fullName       String
 
-  vehicles Vehicle[]
-  plans    Plan[]
+  vehicles       Vehicle[]
+  plans          Plan[]
+  schedule       DriverSchedule?
+  calendarEvents DriverCalendarEvent[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([organizationId])
+}
+
+model DriverSchedule {
+  id              Int @id @default(autoincrement())
+  driverProfileId Int @unique
+
+  workDays  Int      @default(5)
+  offDays   Int      @default(2)
+  startDate DateTime
+
+  driverProfile DriverProfile @relation(fields: [driverProfileId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum CalendarEventType {
+  SICK_LEAVE
+  VACATION
+}
+
+model DriverCalendarEvent {
+  id              Int               @id @default(autoincrement())
+  driverProfileId Int
+  type            CalendarEventType
+  startDate       DateTime
+  endDate         DateTime
+  note            String?
+
+  driverProfile DriverProfile @relation(fields: [driverProfileId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([driverProfileId])
+  @@index([driverProfileId, startDate, endDate])
 }

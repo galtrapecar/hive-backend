@@ -1,4 +1,90 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { CalendarEventType } from 'src/generated/prisma/client';
+
+export class MessageResponseDto {
+  @ApiProperty({ example: 'Driver updated' })
+  message: string;
+}
+
+export class DriverScheduleDto {
+  @ApiProperty({ example: 1 })
+  id: number;
+
+  @ApiProperty({ example: 1 })
+  driverProfileId: number;
+
+  @ApiProperty({ example: 5 })
+  workDays: number;
+
+  @ApiProperty({ example: 2 })
+  offDays: number;
+
+  @ApiProperty({ example: '2026-03-10T00:00:00.000Z' })
+  startDate: Date;
+
+  @ApiProperty({ example: '2026-03-10T00:00:00.000Z' })
+  createdAt: Date;
+
+  @ApiProperty({ example: '2026-03-10T00:00:00.000Z' })
+  updatedAt: Date;
+}
+
+export class DriverScheduleResponseDto {
+  @ApiProperty({ type: DriverScheduleDto, nullable: true })
+  data: DriverScheduleDto | null;
+}
+
+export class CalendarEventDto {
+  @ApiProperty({ example: 1 })
+  id: number;
+
+  @ApiProperty({ example: 1 })
+  driverProfileId: number;
+
+  @ApiProperty({ enum: CalendarEventType, example: CalendarEventType.VACATION })
+  type: CalendarEventType;
+
+  @ApiProperty({ example: '2026-03-15T00:00:00.000Z' })
+  startDate: Date;
+
+  @ApiProperty({ example: '2026-03-20T00:00:00.000Z' })
+  endDate: Date;
+
+  @ApiPropertyOptional({ type: String, nullable: true, example: 'Annual leave' })
+  note: string | null;
+
+  @ApiProperty({ example: '2026-03-10T00:00:00.000Z' })
+  createdAt: Date;
+
+  @ApiProperty({ example: '2026-03-10T00:00:00.000Z' })
+  updatedAt: Date;
+}
+
+export class CalendarEventResponseDto {
+  @ApiProperty({ type: CalendarEventDto })
+  data: CalendarEventDto;
+}
+
+export class CalendarEventListResponseDto {
+  @ApiProperty({ type: [CalendarEventDto] })
+  data: CalendarEventDto[];
+}
+
+export class VehicleListResponseDto {
+  @ApiProperty({
+    type: 'array',
+    items: { $ref: '#/components/schemas/VehicleResponseDto' },
+  })
+  data: any[];
+}
+
+export class PlanListResponseDto {
+  @ApiProperty({
+    type: 'array',
+    items: { $ref: '#/components/schemas/PlanDto' },
+  })
+  data: any[];
+}
 
 export class DriverProfileDto {
   @ApiProperty({ example: 1 })

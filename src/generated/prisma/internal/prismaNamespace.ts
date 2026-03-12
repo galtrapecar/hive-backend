@@ -392,6 +392,8 @@ export const ModelName = {
   Member: 'Member',
   Invitation: 'Invitation',
   DriverProfile: 'DriverProfile',
+  DriverSchedule: 'DriverSchedule',
+  DriverCalendarEvent: 'DriverCalendarEvent',
   Order: 'Order',
   Plan: 'Plan',
   Vehicle: 'Vehicle'
@@ -410,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "account" | "verification" | "organization" | "member" | "invitation" | "driverProfile" | "order" | "plan" | "vehicle"
+    modelProps: "user" | "session" | "account" | "verification" | "organization" | "member" | "invitation" | "driverProfile" | "driverSchedule" | "driverCalendarEvent" | "order" | "plan" | "vehicle"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1006,6 +1008,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DriverSchedule: {
+      payload: Prisma.$DriverSchedulePayload<ExtArgs>
+      fields: Prisma.DriverScheduleFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DriverScheduleFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverSchedulePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DriverScheduleFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverSchedulePayload>
+        }
+        findFirst: {
+          args: Prisma.DriverScheduleFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverSchedulePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DriverScheduleFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverSchedulePayload>
+        }
+        findMany: {
+          args: Prisma.DriverScheduleFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverSchedulePayload>[]
+        }
+        create: {
+          args: Prisma.DriverScheduleCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverSchedulePayload>
+        }
+        createMany: {
+          args: Prisma.DriverScheduleCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DriverScheduleCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverSchedulePayload>[]
+        }
+        delete: {
+          args: Prisma.DriverScheduleDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverSchedulePayload>
+        }
+        update: {
+          args: Prisma.DriverScheduleUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverSchedulePayload>
+        }
+        deleteMany: {
+          args: Prisma.DriverScheduleDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DriverScheduleUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DriverScheduleUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverSchedulePayload>[]
+        }
+        upsert: {
+          args: Prisma.DriverScheduleUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverSchedulePayload>
+        }
+        aggregate: {
+          args: Prisma.DriverScheduleAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDriverSchedule>
+        }
+        groupBy: {
+          args: Prisma.DriverScheduleGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DriverScheduleGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DriverScheduleCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DriverScheduleCountAggregateOutputType> | number
+        }
+      }
+    }
+    DriverCalendarEvent: {
+      payload: Prisma.$DriverCalendarEventPayload<ExtArgs>
+      fields: Prisma.DriverCalendarEventFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DriverCalendarEventFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverCalendarEventPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DriverCalendarEventFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverCalendarEventPayload>
+        }
+        findFirst: {
+          args: Prisma.DriverCalendarEventFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverCalendarEventPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DriverCalendarEventFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverCalendarEventPayload>
+        }
+        findMany: {
+          args: Prisma.DriverCalendarEventFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverCalendarEventPayload>[]
+        }
+        create: {
+          args: Prisma.DriverCalendarEventCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverCalendarEventPayload>
+        }
+        createMany: {
+          args: Prisma.DriverCalendarEventCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DriverCalendarEventCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverCalendarEventPayload>[]
+        }
+        delete: {
+          args: Prisma.DriverCalendarEventDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverCalendarEventPayload>
+        }
+        update: {
+          args: Prisma.DriverCalendarEventUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverCalendarEventPayload>
+        }
+        deleteMany: {
+          args: Prisma.DriverCalendarEventDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DriverCalendarEventUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DriverCalendarEventUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverCalendarEventPayload>[]
+        }
+        upsert: {
+          args: Prisma.DriverCalendarEventUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverCalendarEventPayload>
+        }
+        aggregate: {
+          args: Prisma.DriverCalendarEventAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDriverCalendarEvent>
+        }
+        groupBy: {
+          args: Prisma.DriverCalendarEventGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DriverCalendarEventGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DriverCalendarEventCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DriverCalendarEventCountAggregateOutputType> | number
+        }
+      }
+    }
     Order: {
       payload: Prisma.$OrderPayload<ExtArgs>
       fields: Prisma.OrderFieldRefs
@@ -1375,6 +1525,33 @@ export const DriverProfileScalarFieldEnum = {
 export type DriverProfileScalarFieldEnum = (typeof DriverProfileScalarFieldEnum)[keyof typeof DriverProfileScalarFieldEnum]
 
 
+export const DriverScheduleScalarFieldEnum = {
+  id: 'id',
+  driverProfileId: 'driverProfileId',
+  workDays: 'workDays',
+  offDays: 'offDays',
+  startDate: 'startDate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DriverScheduleScalarFieldEnum = (typeof DriverScheduleScalarFieldEnum)[keyof typeof DriverScheduleScalarFieldEnum]
+
+
+export const DriverCalendarEventScalarFieldEnum = {
+  id: 'id',
+  driverProfileId: 'driverProfileId',
+  type: 'type',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  note: 'note',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DriverCalendarEventScalarFieldEnum = (typeof DriverCalendarEventScalarFieldEnum)[keyof typeof DriverCalendarEventScalarFieldEnum]
+
+
 export const OrderScalarFieldEnum = {
   id: 'id',
   organizationId: 'organizationId',
@@ -1513,6 +1690,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'CalendarEventType'
+ */
+export type EnumCalendarEventTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CalendarEventType'>
+    
+
+
+/**
+ * Reference to a field of type 'CalendarEventType[]'
+ */
+export type ListEnumCalendarEventTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CalendarEventType[]'>
     
 
 
@@ -1688,6 +1879,8 @@ export type GlobalOmitConfig = {
   member?: Prisma.MemberOmit
   invitation?: Prisma.InvitationOmit
   driverProfile?: Prisma.DriverProfileOmit
+  driverSchedule?: Prisma.DriverScheduleOmit
+  driverCalendarEvent?: Prisma.DriverCalendarEventOmit
   order?: Prisma.OrderOmit
   plan?: Prisma.PlanOmit
   vehicle?: Prisma.VehicleOmit
